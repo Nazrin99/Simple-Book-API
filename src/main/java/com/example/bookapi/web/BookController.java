@@ -5,17 +5,14 @@ import com.example.bookapi.payload.request.BookRequest;
 import com.example.bookapi.payload.response.MessageResponse;
 import com.example.bookapi.service.BookService;
 import io.swagger.annotations.ApiResponses;
-import io.swagger.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +27,11 @@ import java.util.Optional;
 public class BookController {
 	@Autowired
 	BookService bookService;
+	
+	private static String readFileToString(String filePath) throws IOException {
+		byte[] encoded = Files.readAllBytes(Paths.get(filePath));
+		return new String(encoded);
+	}
 	
 	@PostMapping("/add")
 	public ResponseEntity<MessageResponse> addBook(@RequestBody BookRequest bookRequest) {
