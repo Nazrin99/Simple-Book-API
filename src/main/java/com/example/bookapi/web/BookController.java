@@ -10,15 +10,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/book")
+@CrossOrigin(maxAge = 3600)
 @ApiResponses(value = {
 		@io.swagger.annotations.ApiResponse(code = 400, message = "This is a bad request, please follow the API documentation for the proper request format"),
 		@io.swagger.annotations.ApiResponse(code = 401, message = "Due to security constraints, your access request cannot be authorized"),
@@ -27,11 +25,6 @@ import java.util.Optional;
 public class BookController {
 	@Autowired
 	BookService bookService;
-	
-	private static String readFileToString(String filePath) throws IOException {
-		byte[] encoded = Files.readAllBytes(Paths.get(filePath));
-		return new String(encoded);
-	}
 	
 	@PostMapping("/add")
 	public ResponseEntity<MessageResponse> addBook(@RequestBody BookRequest bookRequest) {

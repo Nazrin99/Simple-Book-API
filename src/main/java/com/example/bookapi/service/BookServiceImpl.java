@@ -5,7 +5,6 @@ import com.example.bookapi.payload.request.BookRequest;
 import com.example.bookapi.payload.response.MessageResponse;
 import com.example.bookapi.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -20,6 +19,7 @@ public class BookServiceImpl implements BookService{
 	
 	@Override
 	public MessageResponse addBook(BookRequest bookRequest) {
+		
 		Book book = new Book();
 		book.setBookTitle(bookRequest.getBookTitle());
 		book.setAuthorName(bookRequest.getAuthorName());
@@ -27,9 +27,9 @@ public class BookServiceImpl implements BookService{
 		book.setPublishedYear(bookRequest.getPublishedYear());
 		book.setNumberOfPages(bookRequest.getNumberOfPages());
 		
-		Book savedBook = bookRepository.save(book);
+		bookRepository.save(book);
 		
-		return new MessageResponse("Book saved successfully in database with ID: %d".formatted(savedBook.getBookId()));
+		return new MessageResponse("Book saved successfully in database with ID: %d".formatted(book.getBookId()));
 	}
 	
 	@Override
@@ -66,7 +66,7 @@ public class BookServiceImpl implements BookService{
 	public List<Book> getBooksByAuthorName(String authorName) {
 		return bookRepository.getBooksByAuthorName(authorName);
 	}
-	
+
 	@Override
 	public void deleteBookByBookTitle(String bookTitle) {
 		bookRepository.deleteBookByBookTitle(bookTitle);
