@@ -1,4 +1,4 @@
-package com.example.bookapi.payload.response;
+package com.example.servicedeskapi.payload.response;
 
 public class MessageResponse {
 	private String message;
